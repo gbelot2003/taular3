@@ -21,7 +21,8 @@ class Config:
     # Configuración de Redis
     SESSION_TYPE = 'redis'
     SESSION_PERMANENT = False
-    SESSION_REDIS_URL = os.getenv('REDIS_URL', 'redis://localhost:6379/0')
+    SESSION_REDIS_URL = os.getenv('REDIS_URL', 'redis://redis:6379/0')
+
 
 class DevelopmentConfig(Config):
     # Configuración específica para el entorno de desarrollo
@@ -31,6 +32,7 @@ class DevelopmentConfig(Config):
 class TestingConfig(Config):
     # Configuración para el entorno de pruebas
     SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'  # Base de datos en memoria
+    SESSION_REDIS_URL = 'redis://localhost:6379/0'
     TESTING = True
     DEBUG = False
 

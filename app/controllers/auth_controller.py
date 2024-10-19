@@ -1,3 +1,5 @@
+# Archivo: app/controllers/auth_controller.py
+# uff-8
 from flask import Blueprint, current_app, render_template, redirect, url_for, flash, request
 from flask_login import current_user, login_required, login_user, logout_user
 from app.forms.login_form import LoginForm

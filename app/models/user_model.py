@@ -34,6 +34,8 @@ class User(UserMixin, db.Model):
         """Genera un token de verificación de correo electrónico"""
         # Asegurarse de que el SECRET_KEY sea una cadena o bytes
         secret_key = current_app.config['SECRET_KEY']
+        print(secret_key)
+        
         if not isinstance(secret_key, (str, bytes)):
             raise TypeError("SECRET_KEY must be a string or bytes")
         
