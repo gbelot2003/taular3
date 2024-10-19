@@ -6,7 +6,7 @@ from flask_migrate import Migrate
 from flask_session import Session
 from config import DevelopmentConfig  # Importa la configuración adecuada
 from app.routes.main_router import configure_routes
-from extensions import db  # Importar db desde extensions
+from app.extensions import db, mail  # Importar db desde extensions
 import redis
 
 def create_app(config_class=DevelopmentConfig):
@@ -24,6 +24,7 @@ def create_app(config_class=DevelopmentConfig):
 
     # Inicializar la base de datos y migraciones
     db.init_app(app)
+    mail.init_app(app)
     migrate = Migrate(app, db)
 
     # Inicializar LoginManager

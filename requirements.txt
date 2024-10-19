@@ -6,6 +6,7 @@ flask-socketio
 Flask-WTF
 Flask-Session
 flask-login
+Flask-Mail
 email_validator
 Flask-JWT-Extended
 openai 
@@ -15,3 +16,4 @@ gunicorn
 gevent
 redis
 pytest
+itsdangerous

@@ -11,7 +11,14 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = os.getenv('SECRET_KEY') or 'you-will-never-guess'
     SECRET_API_TOKEN = os.getenv('SECRET_API_TOKEN') or 'default-api-token'  # Añade esta línea
-
+    MAIL_SERVER = 'localhost'   # El servidor de Mailpit
+    MAIL_PORT = 1025            # El puerto SMTP de Mailpit
+    MAIL_USE_TLS = False        # Sin encriptación
+    MAIL_USE_SSL = False        # Sin SSL
+    MAIL_USERNAME = None        # Sin autenticación
+    MAIL_PASSWORD = None        # Sin autenticación
+    MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER', 'noreply@yourapp.com')
+    
     # Configuración de Redis
     SESSION_TYPE = 'redis'
     SESSION_PERMANENT = False
