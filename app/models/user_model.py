@@ -84,7 +84,9 @@ class User(UserMixin, db.Model):
         except:
             return None
         
-        return User.query.get(user_id)
+        with db.session() as session:
+            return session.get(User, user_id)
+
 
     def get_id(self):
         return str(self.id)
