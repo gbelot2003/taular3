@@ -16,7 +16,7 @@ services:
     depends_on:
       - redis
       - mailpit  # Dependencia de Mailpit
-    command: flask run --host=0.0.0.0 --port=5000  # Usar el servidor de desarrollo de Flask para autorecarga
+    command: flask run --host=0.0.0.0 --port=5000 --reload  # Usar el servidor de desarrollo de Flask para autorecarga
     #command: ["gunicorn", "-c", "gunicorn_config.py", "run:app"]  # Cuando estés listo para producción
 
   redis:
