@@ -68,7 +68,10 @@ def verify_email(token):
     if user is None:
         flash('El enlace de verificación es inválido o ha expirado.', 'danger')
         return redirect(url_for('auth.login'))
+    
+    print(f"User before verification: {user.is_verified}")  # Debugging
     user.is_verified = True
     db.session.commit()
+    print(f"User after verification: {user.is_verified}")  # Debugging
     flash('Tu cuenta ha sido verificada con éxito.', 'success')
     return redirect(url_for('home.home'))
