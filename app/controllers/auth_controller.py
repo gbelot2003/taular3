@@ -19,7 +19,7 @@ def login():
         if user:
             login_user(user)
             flash('Inicio de sesión exitoso.', 'success')
-            return redirect(url_for('home.home'))  # Redirigir a la página principal
+            return redirect(url_for('dashboard.dashboard_home'))  # Redirigir a la página principal
         else:
             flash('Email o contraseña incorrectos.', 'danger')
 
