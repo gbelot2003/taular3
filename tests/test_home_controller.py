@@ -6,15 +6,11 @@ import os
 # Agregar la ruta raíz del proyecto a sys.path antes de importar los módulos
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 
-
-
 import pytest
 from flask import url_for
-from app import create_app
+from app import create_app, db
 from app.models.user_model import User
-from app.forms.login_form import LoginForm
 from config import TestingConfig
-from app import create_app
 
 @pytest.fixture
 def client():
@@ -24,11 +20,19 @@ def client():
     app.config['PREFERRED_URL_SCHEME'] = 'https'
     app.config['SERVER_NAME'] = 'localhost.localdomain'
 
-    with app.test_client() as client:
-        with app.app_context():
+    with app.app_context():
+        db.create_all()  # Crear todas las tablas para las pruebas
+
+        # Crear un usuario de prueba
+        test_user = User(username='admin', email='admin@example.com')
+        test_user.set_password('admin')
+        db.session.add(test_user)
+        db.session.commit()
+
+        with app.test_client() as client:
             yield client
 
-
+        db.drop_all()  # Limpiar las tablas después de las pruebas
 
 def test_home_page(client):
     """Probar que la página de inicio es accesible"""
