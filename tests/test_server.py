@@ -21,7 +21,7 @@ def test_server_is_running(client):
     # Verificar que el servidor responde en la ruta principal "/"
     response = client.get('/')
     assert response.status_code == 200  # Verifica que la respuesta sea exitosa (200 OK)
-    assert b'Hola' in response.data  # Verifica que el contenido esperado esté en la respuesta
+    assert b'Bienvenido a Mi Proyecto' in response.data  # Verifica que el contenido esperado esté en la respuesta
 
 def test_session_endpoint(client):
     # Verificar que el servidor responde en la ruta "/session"
