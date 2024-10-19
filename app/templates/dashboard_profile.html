@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Perfil - Mi Proyecto{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Perfil de Usuario</h2>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Hola, {{ user.username }}</h4>
+            <p class="card-text">Email: {{ user.email }}</p>
+            <p class="card-text">Rol: {{ user.role }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

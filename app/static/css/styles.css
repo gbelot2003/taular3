@@ -1,12 +1,42 @@
-.jumbotron {
+/* Base Styles */
+body {
+    font-family: 'Arial', sans-serif;
     background-color: #f8f9fa;
-    padding: 2rem 1rem;
+    color: #343a40;
 }
 
-.card {
-    border: none;
+/* Navbar Styles */
+.navbar {
+    background: #007bff;
+    padding: 0.8rem 1rem;
 }
 
-.card-title {
+.navbar-brand {
     font-weight: bold;
+    font-size: 1.5rem;
+    color: #fff !important;
 }
+
+.nav-link {
+    color: #fff !important;
+    margin-right: 15px;
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff !important;
+    border-radius: 5px;
+}
+
+.navbar-toggler-icon {
+    filter: invert(100%);
+}
+
+.btn-outline-light {
+    color: #fff !important;
+    border: 1px solid #fff;
+}
+
+.btn-outline-light:hover {
+    color: #007bf

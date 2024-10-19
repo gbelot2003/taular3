@@ -19,7 +19,7 @@ def login():
         if user:
             login_user(user)
             flash('Inicio de sesión exitoso.', 'success')
-            return redirect(url_for('home.home'))  # Redirigir a la página principal
+            return redirect(url_for('dashboard.dashboard_home'))  # Redirigir a la página principal
         else:
             flash('Email o contraseña incorrectos.', 'danger')
 
@@ -64,14 +64,16 @@ def send_verification():
 @auth_bp.route('/verify_email/<token>')
 def verify_email(token):
     """Ruta para verificar el token del correo"""
-    user = User.verify_token(token)
-    if user is None:
-        flash('El enlace de verificación es inválido o ha expirado.', 'danger')
-        return redirect(url_for('auth.login'))
-    
-    print(f"User before verification: {user.is_verified}")  # Debugging
-    user.is_verified = True
-    db.session.commit()
-    print(f"User after verification: {user.is_verified}")  # Debugging
-    flash('Tu cuenta ha sido verificada con éxito.', 'success')
+    with current_app.app_context():
+        user = User.verify_token(token)
+        if user is None:
+            flash('El enlace de verificación es inválido o ha expirado.', 'danger')
+            return redirect(url_for('auth.login'))
+        if not user.is_verified:
+            user.is_verified = True
+            db.session.add(user)
+            db.session.commit()
+            flash('Tu cuenta ha sido verificada con éxito.', 'success')
+        else:
+            flash('Tu cuenta ya estaba verificada.', 'info')
     return redirect(url_for('home.home'))
