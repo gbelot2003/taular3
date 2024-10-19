@@ -1,32 +1,28 @@
 # app/models/user_model.py
-
-from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-from extensions import db  # Importar db desde extensions
+from extensions import db  # Asegúrate de importar db desde extensions
 
-class User(UserMixin, db.Model):
+class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), unique=True, nullable=False)
+    username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
-
-    def __repr__(self):
-        return f'<User {self.username}>'
+    role = db.Column(db.String(50), nullable=False)
 
     def set_password(self, password):
-        """Crea un hash de la contraseña"""
+        """Hashea la contraseña y la almacena"""
         self.password_hash = generate_password_hash(password)
 
     def check_password(self, password):
-        """Verifica la contraseña ingresada"""
+        """Verifica si la contraseña proporcionada coincide con la hasheada"""
         return check_password_hash(self.password_hash, password)
 
-    @staticmethod
-    def authenticate(email, password):
-        """Autentica al usuario verificando su email y contraseña"""
-        user = User.query.filter_by(email=email).first()
-        if user and user.check_password(password):
-            return user
-        return None
+    def __repr__(self):
+        return f'<User {self.username} - Role: {self.role}>'
+
+# Opcionales: Define constantes para los roles
+ADMINISTRATOR = 'Administrador'
+TEACHER = 'Maestro'
+SUPERVISOR = 'Supervisor'
