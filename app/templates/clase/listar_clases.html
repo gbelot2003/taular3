@@ -1,0 +1,36 @@
+<!-- Archivo: templates/clase/listar_clases.html -->
+{% extends "base.html" %}
+
+{% block title %}Lista de Clases{% endblock %}
+
+{% block content %}
+<h2>Lista de Clases</h2>
+<a href="{{ url_for('clase.crear_clase') }}" class="btn btn-primary mb-3">Crear Nueva Clase</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Grado</th>
+            <th>Maestro</th>
+            <th>Horario</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for clase in clases %}
+        <tr>
+            <td>{{ clase.nombre }}</td>
+            <td>{{ clase.grado.nombre }}</td>
+            <td>{{ clase.maestro.username }}</td>
+            <td>{{ clase.horario_inicio }} - {{ clase.horario_fin }}</td>
+            <td>
+                <a href="{{ url_for('clase.editar_clase', clase_id=clase.id) }}" class="btn btn-warning btn-sm">Editar</a>
+                <form action="{{ url_for('clase.eliminar_clase', clase_id=clase.id) }}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar esta clase?')">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

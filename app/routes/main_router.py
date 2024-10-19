@@ -4,6 +4,7 @@ from app.controllers.home_controller import home_bp
 from app.controllers.auth_controller import auth_bp
 from app.controllers.dashboard_controller import dashboard_bp
 from app.controllers.grado_controller import grado_bp
+from app.controllers.clase_controller import clase_bp
 
 def configure_routes(app):
     
@@ -13,6 +14,7 @@ def configure_routes(app):
     app.register_blueprint(home_bp)
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(grado_bp)
+    app.register_blueprint(clase_bp)
 
     # Ruta de prueba para verificar Redis
     @app.route('/session')
