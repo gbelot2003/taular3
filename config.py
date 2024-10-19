@@ -1,4 +1,3 @@
-# Archivo: config.py
 import os
 from dotenv import load_dotenv
 
@@ -9,8 +8,8 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config:
     # Configuración común a todos los entornos
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY = os.getenv('SECRET_KEY') or 'you-will-never-guess'
-    SECRET_API_TOKEN = os.getenv('SECRET_API_TOKEN') or 'default-api-token'  # Añade esta línea
+    SECRET_KEY = os.getenv('SECRET_KEY', 'you-will-never-guess')  # Ensure this is a string
+    SECRET_API_TOKEN = os.getenv('SECRET_API_TOKEN') or 'default-api-token'
     MAIL_SERVER = 'localhost'   # El servidor de Mailpit
     MAIL_PORT = 1025            # El puerto SMTP de Mailpit
     MAIL_USE_TLS = False        # Sin encriptación

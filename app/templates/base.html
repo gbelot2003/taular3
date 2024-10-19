@@ -42,13 +42,13 @@
     <div class="container mt-3">
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-        <div class="alert alert-{{ category }} mt-3" role="alert">
-            {% for category, message in messages %}
-            <p class="mb-0">{{ message }}</p>
-            {% endfor %}
-        </div>
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
         {% endif %}
-        {% endwith %}
+    {% endwith %}
     </div>
 
     <!-- Content Section -->
