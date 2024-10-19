@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - Mi Proyecto{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="jumbotron text-center">
+    <h1 class="display-4">Bienvenido a Mi Proyecto</h1>
+    <p class="lead">Esta es una landing page sencilla con Bootstrap y Jinja.</p>
+    <a class="btn btn-primary btn-lg" href="#features" role="button">Conoce más</a>
+</div>
+
+<!-- Features Section -->
+<div class="container" id="features">
+    <h2 class="text-center mb-5">Características Principales</h2>
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Fácil de Usar</h5>
+                    <p class="card-text">Nuestra herramienta es intuitiva y fácil de usar para todos los usuarios.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Seguridad</h5>
+                    <p class="card-text">Protegemos tus datos con los estándares de seguridad más altos.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Soporte 24/7</h5>
+                    <p class="card-text">Nuestro equipo está disponible para ayudarte en cualquier momento.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

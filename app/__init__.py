@@ -1,6 +1,6 @@
 # Archivo: app/__init__.py
 
-from flask import Flask, session
+from flask import Flask, render_template, session
 from config import DevelopmentConfig  # Importa la configuración adecuada
 from flask_migrate import Migrate
 from flask_session import Session
@@ -25,7 +25,7 @@ def create_app(config_class=DevelopmentConfig):
 
     @app.route('/')
     def hello():
-        return 'Hola'
+       return render_template('index.html')
 
     # Ruta de prueba para verificar Redis
     @app.route('/session')
