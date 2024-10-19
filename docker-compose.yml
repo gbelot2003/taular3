@@ -3,15 +3,15 @@ services:
     build: .
     ports:
       - "5000:5000"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-    depends_on:
-      - redis  # Dependencia del servicio Redis
+    volumes:
+      - .:/app  # Montar el directorio actual en /app dentro del contenedor
     environment:
-      - REDIS_URL=redis://redis:6379/0  # URL de Redis en el contenedor Docker
+      - FLASK_ENV=development  # Configuración de entorno de desarrollo
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - redis
+    command: flask run --host=0.0.0.0 --port=5000  # Usar el servidor de desarrollo de Flask para autorecarga
+    #command: ["gunicorn", "-c", "gunicorn_config.py", "run:app"]  Cuando estés listo para pasar a producción
 
   redis:
     image: "redis:latest"
