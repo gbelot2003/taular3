@@ -1,0 +1,17 @@
+flask
+Flask-SQLAlchemy
+Flask-Migrate
+Flask-Script
+flask-socketio  
+Flask-WTF
+Flask-Session
+flask-login
+email_validator
+Flask-JWT-Extended
+openai 
+python-dotenv
+requests
+gunicorn
+gevent
+redis
+pytest
