@@ -24,7 +24,6 @@ class Config:
     SESSION_PERMANENT = False
     SESSION_REDIS_URL = os.getenv('REDIS_URL', 'redis://redis:6379/0')
 
-
 class DevelopmentConfig(Config):
     # Configuración específica para el entorno de desarrollo
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'instance/dev.db')

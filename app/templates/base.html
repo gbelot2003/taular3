@@ -10,34 +10,51 @@
 
 <body>
     <!-- Header -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="#">Mi Proyecto</a>
+            {% if current_user.is_authenticated %}
+                <a class="navbar-brand" href="/dashboard">Mi Proyecto</a>
+            {% else %}
+                <a class="navbar-brand" href="/">Mi Proyecto</a>
+            {% endif %}
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#features">Características</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about">Acerca de</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contacto</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
-                    </li>
+                    {% if current_user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('auth.logout') }}">Cerrar Sesión</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Hola, {{ current_user.username }}</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#features">Características</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">Acerca de</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contacto</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-light" href="{{ url_for('auth.login') }}">Login</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
+
     <!-- Flash messages -->
     <div class="container mt-3">
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -48,7 +65,7 @@
                 {% endfor %}
             </div>
         {% endif %}
-    {% endwith %}
+        {% endwith %}
     </div>
 
     <!-- Content Section -->
@@ -58,7 +75,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="text-center mt-5">
+    <footer class="bg-light text-center mt-5 py-3 border-top">
         <p>&copy; 2024 Mi Proyecto. Todos los derechos reservados.</p>
     </footer>
 </body>
