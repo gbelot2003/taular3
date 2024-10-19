@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../'
 import pytest
 from flask import url_for
 from app import create_app, db
-from app.models.user_model import User
+from app.models.user_model import User, ADMINISTRATOR
 from config import TestingConfig
 
 @pytest.fixture
@@ -23,8 +23,8 @@ def client():
     with app.app_context():
         db.create_all()  # Crear todas las tablas para las pruebas
 
-        # Crear un usuario de prueba
-        test_user = User(username='admin', email='admin@example.com')
+        # Crear un usuario de prueba con rol de administrador
+        test_user = User(username='admin', email='admin@example.com', role=ADMINISTRATOR)
         test_user.set_password('admin')
         db.session.add(test_user)
         db.session.commit()
