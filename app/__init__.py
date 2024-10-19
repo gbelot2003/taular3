@@ -5,6 +5,7 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_session import Session
 from config import DevelopmentConfig  # Importa la configuración adecuada
+from app.models import *  # Importar todos los modelos de app/models/__init__.py
 from app.routes.main_router import configure_routes
 from app.extensions import db, mail  # Importar db desde extensions
 import redis

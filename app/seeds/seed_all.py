@@ -8,8 +8,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'
 
 from app import create_app, db
 from app.seeds.user_seed import seed_data as seed_users
-# from app.seeds.grado_seed import seed_grados
-# from app.seeds.clase_seed import seed_clases
+from app.seeds.grado_seed import seed_grados
+from app.seeds.clase_seed import seed_clases
 # from app.seeds.alumno_seed import seed_alumnos
 # from app.seeds.parcial_seed import seed_parciales
 
@@ -24,11 +24,11 @@ def seed_all():
         print("Seeding users...")
         seed_users()
 
-        # print("Seeding grados...")
-        # seed_grados()
+        print("Seeding grados...")
+        seed_grados()
 
-        # print("Seeding clases...")
-        # seed_clases()
+        print("Seeding clases...")
+        seed_clases()
 
         # print("Seeding alumnos...")
         # seed_alumnos()
