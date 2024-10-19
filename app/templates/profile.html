@@ -1,0 +1,5 @@
+{% if not current_user.is_verified %}
+    <a href="{{ url_for('auth.send_verification') }}" class="btn btn-warning">Verificar correo electrónico</a>
+{% else %}
+    <span class="text-success">Cuenta verificada</span>
+{% endif %}

@@ -8,7 +8,6 @@ WORKDIR /app
 COPY requirements.txt requirements.txt
 
 # Instala las dependencias
-# RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install -r requirements.txt
 
 # Copia todos los archivos del proyecto (esto se hará dinámicamente con volúmenes en docker-compose)

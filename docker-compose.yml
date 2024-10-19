@@ -8,10 +8,16 @@ services:
     environment:
       - FLASK_ENV=development  # Configuración de entorno de desarrollo
       - REDIS_URL=redis://redis:6379/0
+      - MAIL_SERVER=mailpit  # Configurar Mailpit como servidor de correo
+      - MAIL_PORT=1025
+      - MAIL_USE_TLS=False
+      - MAIL_USE_SSL=False
+      - MAIL_DEFAULT_SENDER=noreply@yourapp.com
     depends_on:
       - redis
-    command: flask run --host=0.0.0.0 --port=5000  # Usar el servidor de desarrollo de Flask para autorecarga
-    #command: ["gunicorn", "-c", "gunicorn_config.py", "run:app"]  Cuando estés listo para pasar a producción
+      - mailpit  # Dependencia de Mailpit
+    command: flask run --host=0.0.0.0 --port=5000 --reload  # Usar el servidor de desarrollo de Flask para autorecarga
+    #command: ["gunicorn", "-c", "gunicorn_config.py", "run:app"]  # Cuando estés listo para producción
 
   redis:
     image: "redis:latest"
@@ -20,6 +26,13 @@ services:
     volumes:
       - redis_data:/data
     command: ["redis-server", "--appendonly", "yes"]
+
+  mailpit:
+    image: "axllent/mailpit"
+    ports:
+      - "1025:1025"  # Puerto SMTP para recibir correos
+      - "8025:8025"  # Interfaz web para visualizar correos
+    restart: always
 
 volumes:
   redis_data:
