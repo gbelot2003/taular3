@@ -5,6 +5,7 @@ from flask_login import UserMixin
 from itsdangerous import URLSafeTimedSerializer as Serializer
 from app.extensions import db
 from flask import current_app
+import json
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
@@ -34,59 +35,26 @@ class User(UserMixin, db.Model):
 
     def generate_verification_token(self, expires_sec=1800):
         """Genera un token de verificación de correo electrónico"""
-        # Asegurarse de que el SECRET_KEY sea una cadena o bytes
-        secret_key = "secrettest"  # current_app.config['SECRET_KEY']
-        print(secret_key)
-        
-        if not isinstance(secret_key, (str, bytes)):
-            raise TypeError("SECRET_KEY must be a string or bytes")
-        
-        if isinstance(secret_key, str):
-            secret_key = secret_key.encode('utf-8')
-        
-        # Asegurarse de que el salt sea una cadena o bytes
-        salt = "your-salt-value"  # Replace with your actual salt value
-        if not isinstance(salt, (str, bytes)):
-            raise TypeError("Salt must be a string or bytes")
-        
-        if isinstance(salt, str):
-            salt = salt.encode('utf-8')
-        
-        # Generar el token utilizando el secret_key y salt convertidos a bytes
+        secret_key = current_app.config['SECRET_KEY']
+        salt = current_app.config.get('SECURITY_SALT', 'your-salt-value')
+
         s = Serializer(secret_key, expires_sec)
-        signer = s.make_signer(salt=salt)
-        return signer.sign(str({'user_id': self.id})).decode('utf-8')
+        return s.dumps({'user_id': self.id}, salt=salt)
 
     @staticmethod
     def verify_token(token):
         """Verifica el token de verificación de correo electrónico"""
-        secret_key = "secrettest"  # current_app.config['SECRET_KEY']
-        salt = "your-salt-value"  # Replace with your actual salt value
-        
-        if not isinstance(secret_key, (str, bytes)):
-            raise TypeError("SECRET_KEY must be a string or bytes")
-        
-        if isinstance(secret_key, str):
-            secret_key = secret_key.encode('utf-8')
-        
-        if not isinstance(salt, (str, bytes)):
-            raise TypeError("Salt must be a string or bytes")
-        
-        if isinstance(salt, str):
-            salt = salt.encode('utf-8')
-        
+        secret_key = current_app.config['SECRET_KEY']
+        salt = current_app.config.get('SECURITY_SALT', 'your-salt-value')
         s = Serializer(secret_key)
-        signer = s.make_signer(salt=salt)
         
         try:
-            data = signer.unsign(token, max_age=1800)
-            user_id = eval(data)['user_id']
+            data = s.loads(token, salt=salt, max_age=1800)
+            user_id = data['user_id']
         except:
             return None
         
-        with db.session() as session:
-            return session.get(User, user_id)
-
+        return User.query.get(user_id)
 
     def get_id(self):
         return str(self.id)
