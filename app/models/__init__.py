@@ -2,3 +2,4 @@
 from .user_model import User
 from .grado_model import Grado
 from .clase_model import Clase
+from .alumno_model import Alumno
