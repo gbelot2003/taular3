@@ -1,11 +1,11 @@
 # Archivo: app/controllers/auth_controller.py
-# uff-8
+# utf-8
 from flask import Blueprint, current_app, render_template, redirect, url_for, flash, request
 from flask_login import current_user, login_required, login_user, logout_user
 from app.forms.login_form import LoginForm
-from app.models.user_model import User
 from flask_mail import Message
 from app.extensions import mail, db
+from app.repositories.user_repository import UserRepository
 from smtplib import SMTPException
 
 auth_bp = Blueprint('auth', __name__)
@@ -15,8 +15,8 @@ auth_bp = Blueprint('auth', __name__)
 def login():
     form = LoginForm()  # Crear una instancia del formulario
     if form.validate_on_submit():  # Verificar si el formulario es válido
-        user = User.authenticate(form.email.data, form.password.data)
-        if user:
+        user = UserRepository.get_by_email(form.email.data)
+        if user and user.check_password(form.password.data):
             login_user(user)
             flash('Inicio de sesión exitoso.', 'success')
             return redirect(url_for('dashboard.dashboard_home'))  # Redirigir a la página principal
@@ -45,7 +45,7 @@ def send_verification():
         # Configurar el mensaje de correo
         msg = Message(
             subject='Verifica tu correo electrónico',
-            sender=current_app.config['MAIL_DEFAULT_SENDER'] or 'noreply@yourapp.com',
+            sender=current_app.config.get('MAIL_DEFAULT_SENDER', 'noreply@yourapp.com'),
             recipients=[current_user.email]
         )
         msg.body = f'Para verificar tu cuenta, haz clic en el siguiente enlace: {verification_link}'
@@ -65,15 +65,21 @@ def send_verification():
 def verify_email(token):
     """Ruta para verificar el token del correo"""
     with current_app.app_context():
-        user = User.verify_token(token)
+        # Verifica el token para obtener al usuario
+        user = UserRepository.verify_token(token)
+        
+        # Si no se encuentra un usuario o el token es inválido
         if user is None:
             flash('El enlace de verificación es inválido o ha expirado.', 'danger')
             return redirect(url_for('auth.login'))
+        
+        # Si el usuario no está verificado, marcarlo como verificado
         if not user.is_verified:
             user.is_verified = True
             db.session.add(user)
-            db.session.commit()
+            db.session.commit()  # Guardar los cambios en la base de datos
             flash('Tu cuenta ha sido verificada con éxito.', 'success')
         else:
             flash('Tu cuenta ya estaba verificada.', 'info')
+    
     return redirect(url_for('home.home'))
