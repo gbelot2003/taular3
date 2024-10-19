@@ -1,11 +1,12 @@
 # Archivo: app/routes/main_router.py
 from flask import render_template, redirect, url_for, flash, request, session
-
+from app.controllers.home_controller import home_bp
 
 def configure_routes(app):
-    @app.route('/')
-    def hello():
-       return render_template('index.html')
+    
+    # Registrar los Blueprints
+    app.register_blueprint(home_bp)
+
 
     # Ruta de prueba para verificar Redis
     @app.route('/session')
