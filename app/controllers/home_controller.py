@@ -31,7 +31,7 @@ def login():
 def logout():
     logout_user()
     flash('Has cerrado sesión correctamente.', 'success')
-    return redirect(url_for('home.login'))  # Redirigir al formulario de inicio de sesión
+    return redirect(url_for('home.login'))
 
 @home_bp.route('/protected')
 @login_required
