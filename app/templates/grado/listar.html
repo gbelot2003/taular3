@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Lista de Grados{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Lista de Grados</h2>
+    <a href="{{ url_for('grado.crear_grado') }}" class="btn btn-primary mb-3">Crear Nuevo Grado</a>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for grado in grados %}
+            <tr>
+                <td>{{ grado.id }}</td>
+                <td>{{ grado.nombre }}</td>
+                <td>{{ grado.descripcion }}</td>
+                <td>
+                    <a href="{{ url_for('grado.editar_grado', grado_id=grado.id) }}" class="btn btn-warning btn-sm">Editar</a>
+                    <form action="{{ url_for('grado.eliminar_grado', grado_id=grado.id) }}" method="post" style="display: inline-block;">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este grado?');">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
