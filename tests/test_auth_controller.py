@@ -4,7 +4,6 @@ import os
 # Agregar la ruta raíz del proyecto a sys.path antes de importar los módulos
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 
-
 import pytest
 from flask import url_for
 from app import create_app, db

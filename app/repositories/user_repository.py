@@ -20,26 +20,13 @@ class UserRepository:
     def verify_token(token):
         """Verifica el token de verificación de correo electrónico y devuelve el usuario correspondiente"""
         secret_key = current_app.config['SECRET_KEY']
-        salt = "your-salt-value"
-
-        if not isinstance(secret_key, (str, bytes)):
-            raise TypeError("SECRET_KEY must be una cadena o bytes")
-        
-        if isinstance(secret_key, str):
-            secret_key = secret_key.encode('utf-8')
-        
-        if not isinstance(salt, (str, bytes)):
-            raise TypeError("Salt must be una cadena o bytes")
-        
-        if isinstance(salt, str):
-            salt = salt.encode('utf-8')
+        salt = current_app.config.get('SECURITY_SALT', 'your-salt-value')
 
         s = Serializer(secret_key)
-        signer = s.make_signer(salt=salt)
         
         try:
-            data = signer.unsign(token, max_age=1800)
-            user_id = eval(data)['user_id']
+            data = s.loads(token, salt=salt, max_age=1800)
+            user_id = data['user_id']
         except:
             return None
         
