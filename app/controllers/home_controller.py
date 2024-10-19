@@ -20,7 +20,7 @@ def login():
         if user:
             login_user(user)
             flash('Inicio de sesión exitoso.', 'success')
-            return redirect(url_for('hello'))
+            return redirect(url_for('home.home'))  # Redirigir a la página principal
         else:
             flash('Email o contraseña incorrectos.', 'danger')
 
@@ -31,7 +31,7 @@ def login():
 def logout():
     logout_user()
     flash('Has cerrado sesión correctamente.', 'success')
-    return redirect(url_for('login'))
+    return redirect(url_for('home.login'))  # Redirigir al formulario de inicio de sesión
 
 @home_bp.route('/protected')
 @login_required

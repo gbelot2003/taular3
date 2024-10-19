@@ -23,7 +23,7 @@ def create_app(config_class=DevelopmentConfig):
     Session(app)
 
     login_manager = LoginManager(app)
-    login_manager.login_view = 'login'  # Nombre de la vista para redirigir si no se está autenticado
+    login_manager.login_view = 'home.login'  # Nombre de la vista para redirigir si no se está autenticado
 
     @login_manager.user_loader
     def load_user(user_id):
