@@ -39,6 +39,5 @@ class TestingConfig(Config):
 class ProductionConfig(Config):
     # Configuración para el entorno de producción
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///' + os.path.join(basedir, 'instance/prod.db')
-    DEBUG = False
-    
+    DEBUG = False    
     
