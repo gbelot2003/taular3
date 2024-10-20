@@ -4,29 +4,31 @@
 {% block title %}Crear Clase{% endblock %}
 
 {% block content %}
-<h2>Crear Clase</h2>
-<form method="post">
-    {{ form.hidden_tag() }}
-    <div class="form-group">
-        {{ form.nombre.label(class="form-label") }}
-        {{ form.nombre(class="form-control") }}
-    </div>
-    <div class="form-group">
-        {{ form.grado_id.label(class="form-label") }}
-        {{ form.grado_id(class="form-control") }}
-    </div>
-    <div class="form-group">
-        {{ form.maestro_id.label(class="form-label") }}
-        {{ form.maestro_id(class="form-control") }}
-    </div>
-    <div class="form-group">
-        {{ form.horario_inicio.label(class="form-label") }}
-        {{ form.horario_inicio(class="form-control") }}
-    </div>
-    <div class="form-group">
-        {{ form.horario_fin.label(class="form-label") }}
-        {{ form.horario_fin(class="form-control") }}
-    </div>
-    <button type="submit" class="btn btn-success">Guardar</button>
-</form>
+<div class="container mt-4">
+    <h2 class="mb-4">Crear Clase</h2>
+    <form method="post">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.nombre.label(class="form-label") }}
+            {{ form.nombre(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.grado_id.label(class="form-label") }}
+            {{ form.grado_id(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.maestro_id.label(class="form-label") }}
+            {{ form.maestro_id(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.horario_inicio.label(class="form-label") }}
+            {{ form.horario_inicio(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.horario_fin.label(class="form-label") }}
+            {{ form.horario_fin(class="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-success mt-3">Guardar</button>
+    </form>
+</div>
 {% endblock %}
